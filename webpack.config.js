@@ -9,8 +9,9 @@ export default (env, argv) => {
     output: {
       filename: isProduction ? "[name].[contenthash].js" : "main.js",
       path: path.resolve(import.meta.dirname, "dist"),
-      // Relative, so the build also works from a GitHub Pages subdirectory.
-      publicPath: "./",
+      // "./" so the prod build works from a GitHub Pages subdirectory; the dev
+      // server needs an absolute "/" or it can't serve the app at root.
+      publicPath: isProduction ? "./" : "/",
       clean: true,
     },
     devtool: isProduction ? "source-map" : "eval-source-map",
